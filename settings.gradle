@@ -1,0 +1,2 @@
+include ':app', ':navigationheaderview'
+rootProject.name='NavigationHeaderView'

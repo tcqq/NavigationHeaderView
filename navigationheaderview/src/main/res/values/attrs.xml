@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <declare-styleable name="HeaderView">
+        <attr name="hv_profile_username" format="string" />
+        <attr name="hv_profile_email" format="string" />
+        <attr name="hv_profile_avatar" format="reference" />
+        <attr name="hv_profile_background" format="reference" />
+        <attr name="hv_background_color" format="color" />
+        <attr name="hv_add_status_bar_height" format="boolean" />
+        <attr name="hv_show_gradient" format="boolean" />
+        <attr name="hv_show_arrow" format="boolean" />
+        <attr name="hv_show_add_button" format="boolean" />
+        <attr name="hv_add_icon" format="reference" />
+        <attr name="hv_dialog_title" format="string" />
+        <attr name="hv_style" format="enum">
+            <enum name="normal" value="1" />
+            <enum name="compact" value="2" />
+        </attr>
+        <attr name="hv_theme" format="enum">
+            <enum name="light" value="1" />
+            <enum name="dark" value="2" />
+        </attr>
+        <attr name="hv_highlight_color" format="color" />
+    </declare-styleable>
+
+    <declare-styleable name="CircleImageView">
+        <attr name="civ_border_width" format="dimension" />
+        <attr name="civ_border_color" format="color" />
+        <attr name="civ_border_overlay" format="boolean" />
+        <!-- {@deprecated Use civ_circlebackground_color instead.} -->
+        <attr name="civ_fill_color" format="color" />
+        <attr name="civ_circle_background_color" format="color" />
+    </declare-styleable>
+
+</resources>

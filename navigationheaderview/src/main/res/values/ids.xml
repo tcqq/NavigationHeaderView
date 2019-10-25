@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <item name="hv_first_profile" type="id" />
+    <item name="hv_second_profile" type="id" />
+    <item name="hv_third_profile" type="id" />
+
+</resources>
