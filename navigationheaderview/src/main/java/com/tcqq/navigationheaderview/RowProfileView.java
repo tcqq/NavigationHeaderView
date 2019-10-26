@@ -8,7 +8,6 @@ import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.view.Gravity;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.ColorInt;
@@ -24,12 +23,10 @@ class RowProfileView extends ViewGroup {
     private CircleImageView avatar;
     private TextView username;
     private TextView email;
-    private ImageView check;
 
     private int hvAvatarRowDimen;
     private int hvRowHeightDimen;
     private int hvRowMarginDimen;
-    private int hvRowCheckDimen;
     private int hvRowMarginTextDimen;
     private int hvTextDimen;
     private int hvRowAvatarBorderDimen;
@@ -66,7 +63,6 @@ class RowProfileView extends ViewGroup {
     public void setAccent(@ColorInt int accentColor) {
         accent = accentColor;
         avatar.setBorderColor(accent);
-        check.setColorFilter(accent);
     }
 
     public boolean isActive() {
@@ -86,13 +82,12 @@ class RowProfileView extends ViewGroup {
         } else {
             avatar.setPadding(hvRowAvatarBorderDimen, hvRowAvatarBorderDimen, hvRowAvatarBorderDimen, hvRowAvatarBorderDimen);
         }
-        check.setVisibility(hvActive ? VISIBLE : INVISIBLE);
         if (typeface != null) {
             username.setTypeface(typeface);
             email.setTypeface(typeface);
         } else {
-            username.setTypeface(active ? Typeface.DEFAULT_BOLD : Typeface.DEFAULT);
-            email.setTypeface(active ? Typeface.DEFAULT_BOLD : Typeface.DEFAULT);
+            username.setTypeface(Typeface.DEFAULT);
+            email.setTypeface(Typeface.DEFAULT);
         }
         username.setText(hvProfile.getUsername());
         email.setText(hvProfile.getEmail());
@@ -105,13 +100,9 @@ class RowProfileView extends ViewGroup {
     @SuppressLint("RtlHardcoded")
     private void addViews() {
         LayoutParams avatarLayoutParams = new LayoutParams(hvAvatarRowDimen, hvAvatarRowDimen);
-        LayoutParams checkLayoutParams = new LayoutParams(hvRowCheckDimen, hvRowCheckDimen);
         avatar = new CircleImageView(getContext());
         avatar.setBorderColor(accent);
         avatar.setBorderWidth(hvRowAvatarBorderDimen);
-        check = new ImageView(getContext());
-        check.setImageResource(R.drawable.hv_profile_check);
-        check.setColorFilter(accent);
         username = new TextView(getContext());
         username.setTextColor(Utils.getTextColorPrimary(getContext()));
         username.setGravity(Gravity.CENTER_VERTICAL | (hvIsRTL ? Gravity.RIGHT : Gravity.LEFT));
@@ -123,7 +114,6 @@ class RowProfileView extends ViewGroup {
         email.setMaxLines(1);
         email.setEllipsize(TextUtils.TruncateAt.END);
         addView(avatar, avatarLayoutParams);
-        addView(check, checkLayoutParams);
         addView(username);
         addView(email);
     }
@@ -134,7 +124,6 @@ class RowProfileView extends ViewGroup {
         hvAvatarRowDimen = getResources().getDimensionPixelSize(R.dimen.hv_row_avatar);
         hvRowHeightDimen = getResources().getDimensionPixelSize(R.dimen.hv_row_height);
         hvRowMarginDimen = getResources().getDimensionPixelSize(R.dimen.hv_row_margin);
-        hvRowCheckDimen = getResources().getDimensionPixelSize(R.dimen.hv_row_check);
         hvRowMarginTextDimen = getResources().getDimensionPixelSize(R.dimen.hv_row_margin_text);
         hvTextDimen = getResources().getDimensionPixelSize(R.dimen.hv_text);
         hvRowAvatarBorderDimen = getResources().getDimensionPixelSize(R.dimen.hv_row_avatar_border);
@@ -153,15 +142,11 @@ class RowProfileView extends ViewGroup {
                     getMeasuredHeight() / 2 - hvAvatarRowDimen / 2,
                     getMeasuredWidth() - hvRowMarginDimen,
                     getMeasuredHeight() / 2 + hvAvatarRowDimen / 2);
-            check.layout(hvRowMarginDimen,
-                    getMeasuredHeight() / 2 - hvRowCheckDimen / 2,
-                    hvRowCheckDimen + hvRowMarginDimen,
-                    getMeasuredHeight() / 2 + hvRowCheckDimen / 2);
-            username.layout(check.getRight() + hvRowMarginTextDimen,
+            username.layout(hvRowMarginTextDimen,
                     getMeasuredHeight() / 2 - hvTextDimen,
                     avatar.getLeft() - hvRowMarginTextDimen,
                     getMeasuredHeight() / 2);
-            email.layout(check.getRight() + hvRowMarginTextDimen,
+            email.layout(hvRowMarginTextDimen,
                     getMeasuredHeight() / 2,
                     avatar.getLeft() - hvRowMarginTextDimen,
                     getMeasuredHeight() / 2 + hvTextDimen);
@@ -170,17 +155,13 @@ class RowProfileView extends ViewGroup {
                     getMeasuredHeight() / 2 - hvAvatarRowDimen / 2,
                     hvRowMarginDimen + hvAvatarRowDimen,
                     getMeasuredHeight() / 2 + hvAvatarRowDimen / 2);
-            check.layout(getMeasuredWidth() - hvRowMarginDimen - hvRowCheckDimen,
-                    getMeasuredHeight() / 2 - hvRowCheckDimen / 2,
-                    getMeasuredWidth() - hvRowMarginDimen,
-                    getMeasuredHeight() / 2 + hvRowCheckDimen / 2);
             username.layout(avatar.getRight() + hvRowMarginTextDimen,
                     getMeasuredHeight() / 2 - hvTextDimen,
-                    check.getLeft() - hvRowMarginTextDimen,
+                    getMeasuredWidth() - hvRowMarginTextDimen,
                     getMeasuredHeight() / 2);
             email.layout(avatar.getRight() + hvRowMarginTextDimen,
                     getMeasuredHeight() / 2,
-                    check.getLeft() - hvRowMarginTextDimen,
+                    getMeasuredWidth() - hvRowMarginTextDimen,
                     getMeasuredHeight() / 2 + hvTextDimen);
         }
     }

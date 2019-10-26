@@ -2,7 +2,6 @@
 <resources>
     <color name="colorPrimary">#3F51B5</color>
     <color name="colorPrimaryDark">#303F9F</color>
-    <color name="colorAccent">#FF4081</color>
-
-    <drawable name="colorAccent">@color/colorAccent</drawable>
+    <color name="colorSecondary">#FF4081</color>
+    <color name="colorSurface">@android:color/white</color>
 </resources>

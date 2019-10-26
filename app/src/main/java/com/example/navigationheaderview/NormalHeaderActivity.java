@@ -110,10 +110,9 @@ public class NormalHeaderActivity extends AppCompatActivity {
         headerView.setStyle(HeaderView.STYLE_NORMAL);
         headerView.setTheme(HeaderView.THEME_LIGHT);
         headerView.setShowGradient(true);
-        headerView.setHighlightColor(ContextCompat.getColor(this, R.color.colorAccent));
+        headerView.setHighlightColor(ContextCompat.getColor(this, R.color.colorSecondary));
         headerView.addProfile(profile, profile2, profile3, profile4);
         headerView.addDialogItem(item, item2);
-        headerView.setShowAddButton(true);
         //headerView.setAddIconDrawable(R.drawable.ic_action_settings);
         headerView.setDialogTitle("Choose account");
         headerView.setShowArrow(true);

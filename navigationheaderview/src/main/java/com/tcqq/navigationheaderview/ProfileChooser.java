@@ -7,10 +7,8 @@ import android.content.Context;
 import android.graphics.Typeface;
 import android.util.SparseArray;
 import android.view.Gravity;
-import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -25,7 +23,7 @@ class ProfileChooser extends Dialog {
     private ProfileChooserCallback callback;
 
     @SuppressLint("RtlHardcoded")
-    ProfileChooser(Context context, SparseArray<Profile> profileSparseArray, ArrayList<Item> items, int accent, boolean showAdd, String titleValue, int icon, Typeface tf) {
+    ProfileChooser(Context context, SparseArray<Profile> profileSparseArray, ArrayList<Item> items, int accent, String titleValue, Typeface tf) {
         super(context);
         this.requestWindowFeature(Window.FEATURE_NO_TITLE);
         this.setContentView(R.layout.hw_account_chooser);
@@ -33,22 +31,10 @@ class ProfileChooser extends Dialog {
         LinearLayout linearLayout = findViewById(R.id.hw_profile_container);
         LinearLayout linearLayout1 = findViewById(R.id.hw_action_container);
         TextView title = findViewById(R.id.hw_dialog_title);
-        ImageView add = findViewById(R.id.hv_add_profile);
-        add.setImageResource(icon);
         title.setTextColor(Utils.getTextColorPrimary(context));
         title.setText(titleValue);
         title.setGravity(Gravity.CENTER_VERTICAL | (hvIsRTL ? Gravity.RIGHT : Gravity.LEFT));
         if (tf != null) title.setTypeface(tf);
-        add.setVisibility(showAdd ? View.VISIBLE : View.INVISIBLE);
-        add.setColorFilter(Utils.getTextColorPrimary(context));
-        add.setBackgroundResource(Utils.selectableItemBackgroundBorderless(context));
-        add.setOnClickListener(v -> {
-            if (callback != null) {
-                if (callback.onAdd()) {
-                    dismiss();
-                }
-            }
-        });
         for (int i = 0; i < profileSparseArray.size(); i++) {
             Profile profile = profileSparseArray.valueAt(i);
             if (profile.getId() != 1) {

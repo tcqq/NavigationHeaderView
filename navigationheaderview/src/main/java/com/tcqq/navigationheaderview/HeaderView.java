@@ -14,12 +14,12 @@ import android.util.SparseArray;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.ColorInt;
 import androidx.annotation.ColorRes;
-import androidx.annotation.DrawableRes;
 import androidx.annotation.IntDef;
 import androidx.annotation.IntRange;
 import androidx.annotation.RestrictTo;
@@ -57,14 +57,16 @@ public class HeaderView extends ViewGroup implements ProfileChooserCallback {
     private View selector;
     private TextView username;
     private TextView email;
-    private ImageView arrow;
+    private ImageButton arrow;
 
     private int hvAvatarDimen;
     private int hvMarginDimen;
     private int hvTextDimen;
     private int hvArrowDimen;
     private int hvAvatarMiniDimen;
-    private int hvTextColor;
+    private int hvUsernameColor;
+    private int hvEmailColor;
+    private int hvArrowColor;
     private int hvStyle;
     private int hvTheme;
     @ColorInt
@@ -73,10 +75,7 @@ public class HeaderView extends ViewGroup implements ProfileChooserCallback {
     private int hvHighlightColor;
     private boolean hvAddStatusBarHeight;
     private boolean hvShowGradient;
-    private boolean hvShowAddButton;
     private boolean hvShowArrow;
-    @DrawableRes
-    private int hvAddIconDrawable;
     private String hvDialogTitle;
     private boolean hvIsRTL;
 
@@ -133,14 +132,18 @@ public class HeaderView extends ViewGroup implements ProfileChooserCallback {
     public void setTheme(@Theme int theme) {
         hvTheme = theme;
         if (hvTheme == THEME_LIGHT) {
-            hvTextColor = Color.WHITE;
+            hvUsernameColor = Color.WHITE;
+            hvEmailColor = Color.parseColor("#b3ffffff");
+            hvArrowColor = Color.WHITE;
         }
         if (hvTheme == THEME_DARK) {
-            hvTextColor = Color.BLACK;
+            hvUsernameColor = Color.BLACK;
+            hvEmailColor = Color.BLACK;
+            hvArrowColor = Color.BLACK;
         }
-        username.setTextColor(hvTextColor);
-        email.setTextColor(hvTextColor);
-        arrow.setColorFilter(hvTextColor);
+        username.setTextColor(hvUsernameColor);
+        email.setTextColor(hvEmailColor);
+        arrow.setColorFilter(hvArrowColor);
     }
 
     /**
@@ -263,24 +266,10 @@ public class HeaderView extends ViewGroup implements ProfileChooserCallback {
     }
 
     /**
-     * @param addIconDrawable replace default add icon, param 14dp icon and 16dp padding
-     */
-    public void setAddIconDrawable(@DrawableRes int addIconDrawable) {
-        hvAddIconDrawable = addIconDrawable;
-    }
-
-    /**
      * @param fragmentManager set FragmentManager for use a DialogFragment for profile chooser and prevent dismiss in activity rotation
      */
     public void setFragmentManager(FragmentManager fragmentManager) {
         hvFragmentManager = fragmentManager;
-    }
-
-    /**
-     * @param showAddButton show button in the upper right in profile chooser
-     */
-    public void setShowAddButton(boolean showAddButton) {
-        hvShowAddButton = showAddButton;
     }
 
     /**
@@ -479,9 +468,7 @@ public class HeaderView extends ViewGroup implements ProfileChooserCallback {
             hvTheme = THEME_LIGHT;
             hvShowGradient = true;
             hvShowArrow = true;
-            hvShowAddButton = true;
             hvDialogTitle = "Account";
-            hvAddIconDrawable = R.drawable.hv_add_profile;
         } else {
             TypedArray typedArray = getContext().obtainStyledAttributes(attrs, R.styleable.HeaderView, defStyle, 0);
 
@@ -497,9 +484,7 @@ public class HeaderView extends ViewGroup implements ProfileChooserCallback {
             hvTheme = typedArray.getInt(R.styleable.HeaderView_hv_theme, THEME_LIGHT);
             hvShowGradient = typedArray.getBoolean(R.styleable.HeaderView_hv_show_gradient, true);
             hvShowArrow = typedArray.getBoolean(R.styleable.HeaderView_hv_show_arrow, true);
-            hvShowAddButton = typedArray.getBoolean(R.styleable.HeaderView_hv_show_add_button, true);
             hvDialogTitle = typedArray.getString(R.styleable.HeaderView_hv_dialog_title);
-            hvAddIconDrawable = typedArray.getResourceId(R.styleable.HeaderView_hv_add_icon, R.drawable.hv_add_profile);
             typedArray.recycle();
         }
 
@@ -528,10 +513,14 @@ public class HeaderView extends ViewGroup implements ProfileChooserCallback {
         hvTextDimen = getResources().getDimensionPixelSize(R.dimen.hv_text);
         hvArrowDimen = getResources().getDimensionPixelSize(R.dimen.hv_arrow);
         if (hvTheme == THEME_LIGHT) {
-            hvTextColor = Color.WHITE;
+            hvUsernameColor = Color.WHITE;
+            hvEmailColor = Color.parseColor("#b3ffffff");
+            hvArrowColor = Color.WHITE;
         }
         if (hvTheme == THEME_DARK) {
-            hvTextColor = Color.BLACK;
+            hvUsernameColor = Color.BLACK;
+            hvEmailColor = Color.BLACK;
+            hvArrowColor = Color.BLACK;
         }
     }
 
@@ -565,8 +554,8 @@ public class HeaderView extends ViewGroup implements ProfileChooserCallback {
     @SuppressLint("RtlHardcoded")
     private void addUsername() {
         username = new TextView(getContext());
-        username.setTextColor(hvTextColor);
-        username.setTypeface(Typeface.DEFAULT_BOLD);
+        username.setTextAppearance(getContext(), R.style.TextAppearance_MaterialComponents_Subtitle2);
+        username.setTextColor(hvUsernameColor);
         username.setGravity(Gravity.CENTER_VERTICAL | (hvIsRTL ? Gravity.RIGHT : Gravity.LEFT));
         username.setMaxLines(1);
         username.setEllipsize(TextUtils.TruncateAt.END);
@@ -576,7 +565,8 @@ public class HeaderView extends ViewGroup implements ProfileChooserCallback {
     @SuppressLint("RtlHardcoded")
     private void addEmail() {
         email = new TextView(getContext());
-        email.setTextColor(hvTextColor);
+        email.setTextAppearance(getContext(), R.style.TextAppearance_MaterialComponents_Body2);
+        email.setTextColor(hvEmailColor);
         email.setGravity(Gravity.CENTER_VERTICAL | (hvIsRTL ? Gravity.RIGHT : Gravity.LEFT));
         email.setMaxLines(1);
         email.setEllipsize(TextUtils.TruncateAt.END);
@@ -584,18 +574,18 @@ public class HeaderView extends ViewGroup implements ProfileChooserCallback {
     }
 
     private void addArrow() {
-        arrow = new ImageView(getContext());
+        arrow = new ImageButton(getContext());
         arrow.setImageResource(R.drawable.hv_arrow);
-        arrow.setBackgroundResource(Utils.selectableItemBackground(getContext()));
-        arrow.setColorFilter(hvTextColor);
+        arrow.setBackgroundResource(Utils.selectableItemBackgroundBorderless(getContext()));
+        arrow.setColorFilter(hvArrowColor);
         arrow.setOnClickListener(v -> {
             if (hvFragmentManager != null) {
-                ProfileChooserFragment profileChooserFragment = ProfileChooserFragment.newInstance(profileSparseArray, itemArrayList, hvHighlightColor, hvShowAddButton, hvDialogTitle, hvAddIconDrawable);
+                ProfileChooserFragment profileChooserFragment = ProfileChooserFragment.newInstance(profileSparseArray, itemArrayList, hvHighlightColor, hvDialogTitle);
                 profileChooserFragment.setCallback(HeaderView.this);
                 profileChooserFragment.setTypeface(typeface);
                 profileChooserFragment.show(hvFragmentManager, ProfileChooserFragment.FRAGMENT_TAG);
             } else {
-                profileChooser = new ProfileChooser(getContext(), profileSparseArray, itemArrayList, hvHighlightColor, hvShowAddButton, hvDialogTitle, hvAddIconDrawable, typeface);
+                profileChooser = new ProfileChooser(getContext(), profileSparseArray, itemArrayList, hvHighlightColor, hvDialogTitle, typeface);
                 profileChooser.setCallback(HeaderView.this);
                 profileChooser.show();
             }

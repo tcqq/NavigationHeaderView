@@ -10,8 +10,6 @@
         <attr name="hv_add_status_bar_height" format="boolean" />
         <attr name="hv_show_gradient" format="boolean" />
         <attr name="hv_show_arrow" format="boolean" />
-        <attr name="hv_show_add_button" format="boolean" />
-        <attr name="hv_add_icon" format="reference" />
         <attr name="hv_dialog_title" format="string" />
         <attr name="hv_style" format="enum">
             <enum name="normal" value="1" />

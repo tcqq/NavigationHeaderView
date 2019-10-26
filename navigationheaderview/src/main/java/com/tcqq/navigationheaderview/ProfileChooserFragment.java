@@ -8,12 +8,13 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
+
+import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,25 +25,22 @@ import java.util.List;
 
 public class ProfileChooserFragment extends DialogFragment {
 
-    public static final String FRAGMENT_TAG = "HV_PROFILE_CHOOSER_FRAGMENT";
+    static final String FRAGMENT_TAG = "HV_PROFILE_CHOOSER_FRAGMENT";
 
     private LinearLayout linearLayout;
     private LinearLayout linearLayout1;
     private TextView title;
-    private ImageView add;
 
     private ProfileChooserCallback callback;
     private Typeface typeface;
     private boolean hvIsRTL;
 
-    public static ProfileChooserFragment newInstance(SparseArray<Profile> profileSparseArray, ArrayList<Item> items, int accent, boolean showAdd, String titleValue, int icon) {
+    static ProfileChooserFragment newInstance(SparseArray<Profile> profileSparseArray, ArrayList<Item> items, int accent, String titleValue) {
         Bundle bundle = new Bundle();
         bundle.putSparseParcelableArray("profileSparseArray", profileSparseArray);
         bundle.putParcelableArrayList("items", items);
         bundle.putInt("accent", accent);
-        bundle.putBoolean("showAdd", showAdd);
         bundle.putString("titleValue", titleValue);
-        bundle.putInt("icon", icon);
         ProfileChooserFragment fragment = new ProfileChooserFragment();
         fragment.setArguments(bundle);
         return fragment;
@@ -55,38 +53,24 @@ public class ProfileChooserFragment extends DialogFragment {
         linearLayout = rootView.findViewById(R.id.hw_profile_container);
         linearLayout1 = rootView.findViewById(R.id.hw_action_container);
         title = rootView.findViewById(R.id.hw_dialog_title);
-        add = rootView.findViewById(R.id.hv_add_profile);
         hvIsRTL = getResources().getBoolean(R.bool.is_right_to_left);
         return rootView;
     }
 
     @SuppressLint("RtlHardcoded")
     @Override
-    public void onViewCreated(View view, Bundle savedInstanceState) {
+    public void onViewCreated(@NotNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         Bundle bundle = getArguments();
         SparseArray<Profile> profileSparseArray = bundle.getSparseParcelableArray("profileSparseArray");
         List<Item> items = bundle.getParcelableArrayList("items");
         int accent = bundle.getInt("accent");
-        boolean showAdd = bundle.getBoolean("showAdd");
         String titleValue = bundle.getString("titleValue");
-        int icon = bundle.getInt("icon");
 
-        add.setImageResource(icon);
         title.setTextColor(Utils.getTextColorPrimary(getActivity()));
         title.setText(titleValue);
         title.setGravity(Gravity.CENTER_VERTICAL | (hvIsRTL ? Gravity.RIGHT : Gravity.LEFT));
         if (typeface != null) title.setTypeface(typeface);
-        add.setVisibility(showAdd ? View.VISIBLE : View.INVISIBLE);
-        add.setColorFilter(Utils.getTextColorPrimary(getActivity()));
-        add.setBackgroundResource(Utils.selectableItemBackgroundBorderless(getActivity()));
-        add.setOnClickListener(v -> {
-            if (callback != null) {
-                if (callback.onAdd()) {
-                    dismiss();
-                }
-            }
-        });
         if (profileSparseArray != null) {
             for (int i = 0; i < profileSparseArray.size(); i++) {
                 Profile profile = profileSparseArray.valueAt(i);
@@ -132,11 +116,11 @@ public class ProfileChooserFragment extends DialogFragment {
         }
     }
 
-    public void setCallback(ProfileChooserCallback callback) {
+    void setCallback(ProfileChooserCallback callback) {
         this.callback = callback;
     }
 
-    public void updateTypeface(Typeface tf) {
+    void updateTypeface(Typeface tf) {
         if (tf == null) return;
         setTypeface(tf);
         for (int i = 0; i < linearLayout.getChildCount(); i++) {
@@ -154,7 +138,7 @@ public class ProfileChooserFragment extends DialogFragment {
         title.setTypeface(typeface);
     }
 
-    public void setTypeface(Typeface tf) {
+    void setTypeface(Typeface tf) {
         if (tf == null) return;
         typeface = tf;
     }
