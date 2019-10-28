@@ -1,6 +1,5 @@
 package com.tcqq.navigationheaderview;
 
-import android.net.Uri;
 import android.widget.ImageView;
 
 import androidx.annotation.IntDef;
@@ -34,7 +33,7 @@ public class ImageLoader {
         instance.setImageLoaderInterface(imageLoaderInterface);
     }
 
-    static void loadImage(Uri url, ImageView imageView, @Type int type) {
+    static void loadImage(String url, ImageView imageView, @Type int type) {
         if (instance == null) {
             throw new RuntimeException("ImageLoader must be implemented for use setAvatarUrl and setBackgroundUrl methods");
         }
@@ -51,14 +50,14 @@ public class ImageLoader {
          * @param imageView reference of ImageView
          * @param type      type of image to load AVATAR or HEADER
          */
-        void loadImage(Uri url, ImageView imageView, @Type int type);
+        void loadImage(String url, ImageView imageView, @Type int type);
     }
 
     @RestrictTo(LIBRARY_GROUP)
     @IntDef({AVATAR, HEADER})
     @IntRange(from = 1, to = 2)
     @Retention(RetentionPolicy.SOURCE)
-    public @interface Type {
+    @interface Type {
     }
 
 }

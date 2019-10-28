@@ -491,13 +491,13 @@ public class HeaderView extends ViewGroup implements ProfileChooserCallback {
         if ((hvUsername != null && !hvUsername.isEmpty()) || (hvEmail != null && !hvEmail.isEmpty()) || hvAvatar != 0 || hvBackground != 0) {
             Log.d(TAG, "profile created from XML");
 
-            Profile profile = new Profile.Builder()
-                    .setId(1)
-                    .setUsername(hvUsername)
-                    .setEmail(hvEmail)
-                    .setAvatar(hvAvatar)
-                    .setBackground(hvBackground)
-                    .build();
+            Profile.Builder builder = new Profile.Builder();
+            builder.setId(1);
+            builder.setUsername(hvUsername);
+            builder.setEmail(hvEmail);
+            builder.setAvatarRes(hvAvatar);
+            builder.setBackgroundRes(hvBackground);
+            Profile profile = builder.build();
 
             profileSparseArray.put(profile.getId(), profile);
         }
@@ -799,14 +799,14 @@ public class HeaderView extends ViewGroup implements ProfileChooserCallback {
     @IntDef({STYLE_NORMAL, STYLE_COMPACT})
     @IntRange(from = 1, to = 2)
     @Retention(RetentionPolicy.SOURCE)
-    public @interface Style {
+    @interface Style {
     }
 
     @RestrictTo(LIBRARY_GROUP)
     @IntDef({THEME_LIGHT, THEME_DARK})
     @IntRange(from = 1, to = 2)
     @Retention(RetentionPolicy.SOURCE)
-    public @interface Theme {
+    @interface Theme {
     }
 
 }
