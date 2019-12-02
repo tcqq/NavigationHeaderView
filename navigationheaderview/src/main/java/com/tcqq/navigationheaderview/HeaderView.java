@@ -20,6 +20,7 @@ import android.widget.TextView;
 
 import androidx.annotation.ColorInt;
 import androidx.annotation.ColorRes;
+import androidx.annotation.DrawableRes;
 import androidx.annotation.IntDef;
 import androidx.annotation.IntRange;
 import androidx.annotation.RestrictTo;
@@ -69,6 +70,8 @@ public class HeaderView extends ViewGroup implements ProfileChooserCallback {
     private int hvArrowColor;
     private int hvStyle;
     private int hvTheme;
+    @DrawableRes
+    private int hvDefaultBackground;
     @ColorInt
     private int hvBackgroundColor;
     @ColorInt
@@ -224,6 +227,7 @@ public class HeaderView extends ViewGroup implements ProfileChooserCallback {
             if (profile.getId() == id) {
                 profileSparseArray.removeAt(i);
                 populateAvatar();
+                populateBackground();
                 return;
             }
         }
@@ -387,10 +391,17 @@ public class HeaderView extends ViewGroup implements ProfileChooserCallback {
         }
     }
 
+    private void populateBackground() {
+        if (profileSparseArray.size() == 0) {
+            background.setImageResource(hvDefaultBackground);
+        }
+    }
+
     private void setDefaultValues() {
         headerCallback = new HeaderCallback();
         populateAvatar();
         setBackgroundColor(hvBackgroundColor);
+        populateBackground();
     }
 
     private void setFirstProfile(Profile profile) {
@@ -477,6 +488,7 @@ public class HeaderView extends ViewGroup implements ProfileChooserCallback {
             hvAvatar = typedArray.getResourceId(R.styleable.HeaderView_hv_profile_avatar, 0);
             hvBackground = typedArray.getResourceId(R.styleable.HeaderView_hv_profile_background, 0);
 
+            hvDefaultBackground = typedArray.getResourceId(R.styleable.HeaderView_hv_default_background, 0);
             hvBackgroundColor = typedArray.getColor(R.styleable.HeaderView_hv_background_color, Color.TRANSPARENT);
             hvHighlightColor = typedArray.getColor(R.styleable.HeaderView_hv_highlight_color, Color.BLACK);
             hvAddStatusBarHeight = typedArray.getBoolean(R.styleable.HeaderView_hv_add_status_bar_height, true);
