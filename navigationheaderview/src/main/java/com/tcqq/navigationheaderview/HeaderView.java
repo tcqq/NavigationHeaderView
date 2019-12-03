@@ -56,6 +56,7 @@ public class HeaderView extends ViewGroup implements ProfileChooserCallback {
     private ImageView background;
     private View gradient;
     private View selector;
+    private TextView title;
     private TextView username;
     private TextView email;
     private ImageButton arrow;
@@ -70,6 +71,7 @@ public class HeaderView extends ViewGroup implements ProfileChooserCallback {
     private int hvArrowColor;
     private int hvStyle;
     private int hvTheme;
+    private String hvDefaultTitle;
     @DrawableRes
     private int hvDefaultBackground;
     @ColorInt
@@ -114,6 +116,7 @@ public class HeaderView extends ViewGroup implements ProfileChooserCallback {
         addGradient();
         addSelector();
         addAvatar();
+        addTitle();
         addUsername();
         addEmail();
         addArrow();
@@ -227,7 +230,6 @@ public class HeaderView extends ViewGroup implements ProfileChooserCallback {
             if (profile.getId() == id) {
                 profileSparseArray.removeAt(i);
                 populateAvatar();
-                populateBackground();
                 return;
             }
         }
@@ -368,12 +370,18 @@ public class HeaderView extends ViewGroup implements ProfileChooserCallback {
             size = 3;
         }
         avatar.setVisibility(INVISIBLE);
-        username.setVisibility(INVISIBLE);
-        email.setVisibility(INVISIBLE);
-        background.setImageDrawable(null);
-
         avatar2.setVisibility(INVISIBLE);
         avatar3.setVisibility(INVISIBLE);
+        title.setVisibility(INVISIBLE);
+        username.setVisibility(INVISIBLE);
+        email.setVisibility(INVISIBLE);
+        background.setImageResource(hvDefaultBackground);
+
+        if (profileSparseArray.size() == 0) {
+            title.setVisibility(View.VISIBLE);
+            title.setText(hvDefaultTitle);
+        }
+
         for (int i = 0; i < size; i++) {
             Profile profile = profileSparseArray.valueAt(i);
             Log.d(TAG, "pos [" + i + "] " + profile.getUsername());
@@ -391,17 +399,10 @@ public class HeaderView extends ViewGroup implements ProfileChooserCallback {
         }
     }
 
-    private void populateBackground() {
-        if (profileSparseArray.size() == 0) {
-            background.setImageResource(hvDefaultBackground);
-        }
-    }
-
     private void setDefaultValues() {
         headerCallback = new HeaderCallback();
         populateAvatar();
         setBackgroundColor(hvBackgroundColor);
-        populateBackground();
     }
 
     private void setFirstProfile(Profile profile) {
@@ -488,6 +489,7 @@ public class HeaderView extends ViewGroup implements ProfileChooserCallback {
             hvAvatar = typedArray.getResourceId(R.styleable.HeaderView_hv_profile_avatar, 0);
             hvBackground = typedArray.getResourceId(R.styleable.HeaderView_hv_profile_background, 0);
 
+            hvDefaultTitle = typedArray.getString(R.styleable.HeaderView_hv_default_title);
             hvDefaultBackground = typedArray.getResourceId(R.styleable.HeaderView_hv_default_background, 0);
             hvBackgroundColor = typedArray.getColor(R.styleable.HeaderView_hv_background_color, Color.TRANSPARENT);
             hvHighlightColor = typedArray.getColor(R.styleable.HeaderView_hv_highlight_color, Color.BLACK);
@@ -561,6 +563,17 @@ public class HeaderView extends ViewGroup implements ProfileChooserCallback {
         avatar = new CircleImageView(getContext());
         avatar.setBackgroundResource(Utils.selectableItemBackgroundBorderless(getContext()));
         addView(avatar, 3, layoutParams);
+    }
+
+    @SuppressLint("RtlHardcoded")
+    private void addTitle() {
+        title = new TextView(getContext());
+        title.setTextAppearance(getContext(), R.style.TextAppearance_MaterialComponents_Headline6);
+        title.setTextColor(hvUsernameColor);
+        title.setGravity(Gravity.CENTER_VERTICAL | (hvIsRTL ? Gravity.RIGHT : Gravity.LEFT));
+        title.setMaxLines(1);
+        title.setEllipsize(TextUtils.TruncateAt.END);
+        addView(title, 4);
     }
 
     @SuppressLint("RtlHardcoded")
@@ -650,6 +663,10 @@ public class HeaderView extends ViewGroup implements ProfileChooserCallback {
                         getMeasuredHeight() - hvArrowDimen,
                         hvArrowDimen,
                         getMeasuredHeight());
+                title.layout(arrow.getRight(),
+                        getMeasuredHeight() - hvArrowDimen,
+                        getMeasuredWidth() - hvMarginDimen,
+                        getMeasuredHeight());
                 username.layout(arrow.getRight(),
                         avatar.getBottom() + hvMarginDimen,
                         getMeasuredWidth() - hvMarginDimen,
@@ -665,6 +682,10 @@ public class HeaderView extends ViewGroup implements ProfileChooserCallback {
                 arrow.layout(0,
                         getDimensionFix(getMeasuredHeight()) / 2 - hvArrowDimen / 2,
                         hvArrowDimen,
+                        getDimensionFix(getMeasuredHeight()) / 2 + hvArrowDimen / 2);
+                title.layout(arrow.getRight(),
+                        getDimensionFix(getMeasuredHeight()) / 2 - hvArrowDimen / 2,
+                        avatar.getLeft() - hvMarginDimen,
                         getDimensionFix(getMeasuredHeight()) / 2 + hvArrowDimen / 2);
                 username.layout(arrow.getRight(),
                         getDimensionFix(getMeasuredHeight()) / 2 - hvTextDimen,
@@ -693,6 +714,10 @@ public class HeaderView extends ViewGroup implements ProfileChooserCallback {
                         getMeasuredHeight() - hvArrowDimen,
                         getMeasuredWidth(),
                         getMeasuredHeight());
+                title.layout(hvMarginDimen,
+                        getMeasuredHeight() - hvArrowDimen,
+                        arrow.getLeft(),
+                        getMeasuredHeight());
                 username.layout(hvMarginDimen,
                         avatar.getBottom() + hvMarginDimen,
                         arrow.getLeft(),
@@ -708,6 +733,10 @@ public class HeaderView extends ViewGroup implements ProfileChooserCallback {
                 arrow.layout(getMeasuredWidth() - hvArrowDimen,
                         getDimensionFix(getMeasuredHeight()) / 2 - hvArrowDimen / 2,
                         getMeasuredWidth(),
+                        getDimensionFix(getMeasuredHeight()) / 2 + hvArrowDimen / 2);
+                title.layout(avatar.getRight() + hvMarginDimen,
+                        getDimensionFix(getMeasuredHeight()) / 2 - hvArrowDimen / 2,
+                        arrow.getLeft(),
                         getDimensionFix(getMeasuredHeight()) / 2 + hvArrowDimen / 2);
                 username.layout(avatar.getRight() + hvMarginDimen,
                         getDimensionFix(getMeasuredHeight()) / 2 - hvTextDimen,
@@ -802,6 +831,7 @@ public class HeaderView extends ViewGroup implements ProfileChooserCallback {
     @SuppressWarnings("unused")
     public void setTypeface(Typeface tf) {
         typeface = tf;
+        title.setTypeface(tf);
         username.setTypeface(tf);
         email.setTypeface(tf);
         invalidate();

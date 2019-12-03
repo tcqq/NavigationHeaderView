@@ -2,6 +2,7 @@
 <resources>
 
     <declare-styleable name="HeaderView">
+        <attr name="hv_default_title" format="string" />
         <attr name="hv_default_background" format="reference" />
         <attr name="hv_profile_username" format="string" />
         <attr name="hv_profile_email" format="string" />
