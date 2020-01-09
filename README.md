@@ -1,5 +1,5 @@
 [![API](https://img.shields.io/badge/API-17%2B-brightgreen.svg?style=flat)](https://android-arsenal.com/api?level=17)
-[ ![Download](https://api.bintray.com/packages/tcqq/android/navigationheaderview/images/download.svg?version=1.3.0) ](https://bintray.com/tcqq/android/navigationheaderview/1.3.0/link)
+[ ![Download](https://api.bintray.com/packages/tcqq/android/navigationheaderview/images/download.svg?version=1.3.1) ](https://bintray.com/tcqq/android/navigationheaderview/1.3.1/link)
 
 # NavigationHeaderView
 HeaderView for NavigationView.
@@ -164,14 +164,14 @@ repositories {
 ```
 dependencies {
     // Using JCenter
-    implementation 'com.tcqq.android:navigationheaderview:1.3.0'
+    implementation 'com.tcqq.android:navigationheaderview:1.3.1'
 }
 ```
 
 License
 -------
 
-Copyright 2019 Alan Perry.
+Copyright 2019 Alan Perry
 
 Licensed to the Apache Software Foundation (ASF) under one or more contributor
 license agreements.  See the NOTICE file distributed with this work for

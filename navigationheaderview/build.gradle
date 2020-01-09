@@ -55,7 +55,7 @@ dependencies {
     implementation 'org.jetbrains.kotlin:kotlin-reflect:1.3.61'
 
     //Google
-    implementation 'com.google.android.material:material:1.2.0-alpha02'
+    implementation 'com.google.android.material:material:1.2.0-alpha03'
 
     //CircleImageView
     implementation 'de.hdodenhof:circleimageview:3.0.1'
@@ -66,7 +66,7 @@ publish {
     groupId = 'com.tcqq.android'
     artifactId = 'navigationheaderview'
     repoName = 'android'
-    publishVersion = '1.3.0'
+    publishVersion = '1.3.1'
     desc = 'HeaderView for NavigationView.'
     website = 'https://github.com/tcqq/NavigationHeaderView'
 }
