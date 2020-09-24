@@ -57,6 +57,10 @@ class NormalHeaderActivity : AppCompatActivity() {
         }
         val headerView = nav_view.getHeaderView(0) as HeaderView
 
+        headerView.setOnArrowClickListener {
+            headerView.setShowArrow(false)
+        }
+
         val profile = Profile.build {
             id = 2
             username = "Raphaël Bussa"
@@ -110,7 +114,7 @@ class NormalHeaderActivity : AppCompatActivity() {
         headerView.addProfile(profile, profile2, profile3, profile4)
         headerView.addDialogItem(item, item2)
         headerView.setDialogTitle("Choose account")
-        headerView.setShowArrow(true)
+//        headerView.setShowArrow(true)
         headerView.setOnHeaderClickListener { v ->
             drawer_layout.closeDrawer(
                 GravityCompat.START,

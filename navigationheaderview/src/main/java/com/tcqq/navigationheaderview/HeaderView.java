@@ -260,7 +260,7 @@ public class HeaderView extends ViewGroup implements ProfileChooserCallback {
      */
     public void setShowArrow(boolean showArrow) {
         hvShowArrow = showArrow;
-        addArrow();
+        arrow.setVisibility(hvShowArrow ? VISIBLE : GONE);
     }
 
     /**
