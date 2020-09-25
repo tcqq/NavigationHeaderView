@@ -1,5 +1,5 @@
 [![API](https://img.shields.io/badge/API-17%2B-brightgreen.svg?style=flat)](https://android-arsenal.com/api?level=17)
-[ ![Download](https://api.bintray.com/packages/tcqq/android/navigationheaderview/images/download.svg?version=2.0.0) ](https://bintray.com/tcqq/android/navigationheaderview/2.0.0/link)
+[![](https://jitpack.io/v/tcqq/NavigationHeaderView.svg)](https://jitpack.io/#tcqq/NavigationHeaderView)
 
 # NavigationHeaderView
 HeaderView for NavigationView.
