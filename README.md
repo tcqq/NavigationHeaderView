@@ -1,5 +1,5 @@
 [![API](https://img.shields.io/badge/API-17%2B-brightgreen.svg?style=flat)](https://android-arsenal.com/api?level=17)
-[ ![Download](https://api.bintray.com/packages/tcqq/android/navigationheaderview/images/download.svg?version=1.3.2) ](https://bintray.com/tcqq/android/navigationheaderview/1.3.2/link)
+[ ![Download](https://api.bintray.com/packages/tcqq/android/navigationheaderview/images/download.svg?version=2.0.0) ](https://bintray.com/tcqq/android/navigationheaderview/2.0.0/link)
 
 # NavigationHeaderView
 HeaderView for NavigationView.
@@ -164,7 +164,7 @@ repositories {
 ```
 dependencies {
     // Using JCenter
-    implementation 'com.tcqq.android:navigationheaderview:1.3.2'
+    implementation 'com.github.tcqq:navigationheaderview:2.0.0'
 }
 ```
 
