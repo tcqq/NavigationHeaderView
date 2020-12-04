@@ -164,7 +164,7 @@ repositories {
 ```
 dependencies {
     // Using JCenter
-    implementation 'com.github.tcqq:navigationheaderview:2.0.0'
+    implementation 'com.github.tcqq:navigationheaderview:2.0.1'
 }
 ```
 
