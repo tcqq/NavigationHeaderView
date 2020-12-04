@@ -1,0 +1,15 @@
+<resources>
+	<dimen name="hv_row_margin">33.8dp</dimen>
+	<dimen name="hv_row_avatar">56.2dp</dimen>
+	<dimen name="hv_row_margin_text">28.1dp</dimen>
+	<dimen name="hv_text">28.1dp</dimen>
+	<dimen name="hv_compact">129.4dp</dimen>
+	<dimen name="hv_margin">21.1dp</dimen>
+	<dimen name="hv_row_height">78.8dp</dimen>
+	<dimen name="hv_item_padding">33.8dp</dimen>
+	<dimen name="hv_avatar">87.2dp</dimen>
+	<dimen name="hv_normal">206.7dp</dimen>
+	<dimen name="hv_avatar_mini">56.2dp</dimen>
+	<dimen name="hv_arrow">73.1dp</dimen>
+	<dimen name="hv_row_avatar_border">2.8dp</dimen>
+</resources>
