@@ -164,7 +164,7 @@ repositories {
 ```
 ```
 dependencies {
-    // Using JCenter
+    // Using JitPack
     implementation 'com.github.tcqq:navigationheaderview:2.0.1'
 }
 ```
